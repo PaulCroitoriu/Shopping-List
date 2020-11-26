@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 const withDataFetching = props => WrappedComponent => {
   class WithDataFetching extends React.Component {
@@ -7,7 +7,7 @@ const withDataFetching = props => WrappedComponent => {
       this.state = {
         data: [],
         loading: false,
-        error: '',
+        error: "",
       };
     }
 
