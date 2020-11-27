@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 
@@ -33,8 +33,14 @@ const Alert = styled.span`
   text-align: center;
 `;
 
-const Lists = ({ lists, loading = false, error = false, match, history }) =>
-  !loading && !error ? (
+const Lists = ({ lists, loading, error, getListsRequest, match, history }) => {
+  useEffect(() => {
+    if (!lists.length) {
+      getListsRequest();
+    }
+  }, [lists, getListsRequest]);
+
+  return !loading && !error ? (
     <>
       {history && <SubHeader title="Your Lists" />}
       <ListWrapper>
@@ -49,5 +55,6 @@ const Lists = ({ lists, loading = false, error = false, match, history }) =>
   ) : (
     <Alert>{loading ? "Loading..." : error}</Alert>
   );
+};
 
 export default Lists;

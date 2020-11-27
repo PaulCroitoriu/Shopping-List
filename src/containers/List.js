@@ -16,24 +16,28 @@ const Alert = styled.span`
 `;
 
 const List = ({
-  loading = false,
-  error = false,
-  lists,
-  listItems,
+  items,
+  loading,
+  error,
+  list,
+  getListRequest,
+  getItemsRequest,
   match,
   history,
 }) => {
-  const items =
-    listItems &&
-    listItems.filter(item => item.listId === parseInt(match.params.id));
-  const list =
-    lists && lists.find(list => list.id === parseInt(match.params.id));
+  React.useEffect(() => {
+    if (!list.id) {
+      getListRequest(match.params.id);
+    }
 
-  console.log("history ", history);
-  console.log("list ", list);
+    if (!items.length > 0) {
+      getItemsRequest(match.params.id);
+    }
+  }, [items, list, match.params.id, getItemsRequest, getListRequest]);
+
   return !loading && !error ? (
     <>
-      {history && (
+      {history && list && (
         <SubHeader
           goBack={() => history.goBack()}
           title={list.title}
